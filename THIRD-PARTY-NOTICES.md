@@ -10,7 +10,7 @@ _Last reviewed: 2026-11-17. Versions are the ones resolved in this repository at
 |---|---|---|---|---|
 | Dapper | 2.1.66 | Apache-2.0 | [NuGet](https://www.nuget.org/packages/Dapper/2.1.66) · [source](https://github.com/DapperLib/Dapper) | No |
 | MySqlConnector | 2.6.2 | MIT | [NuGet](https://www.nuget.org/packages/MySqlConnector/2.6.2) · [source](https://github.com/mysql-net/MySqlConnector) | No |
-| Velopack | 1.2.161 | MIT | [NuGet](https://www.nuget.org/packages/Velopack/1.2.161) · [source](https://github.com/velopack/velopack) | No |
+| Velopack | 1.3.39-g8d2844f | MIT | [NuGet](https://www.nuget.org/packages/Velopack/1.3.39-g8d2844f) · [source](https://github.com/velopack/velopack) | No |
 
 <details>
 <summary>Indirect (transitive) dependencies — 2 packages</summary>

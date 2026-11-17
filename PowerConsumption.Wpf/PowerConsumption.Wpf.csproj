@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <!-- Installer and updates. Keep in step with vpk in .github/workflows/release.yml. -->
-    <PackageReference Include="Velopack" Version="1.2.161" />
+    <PackageReference Include="Velopack" Version="1.3.39-g8d2844f" />
   </ItemGroup>
 
   <ItemGroup>
