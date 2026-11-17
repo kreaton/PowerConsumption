@@ -1,0 +1,8 @@
+pandas
+sqlalchemy
+pymysql
+plotly
+nbformat
+ipykernel
+nbconvert
+nbstripout

@@ -1,0 +1,39 @@
+# Dependency vulnerability audit for the NuGet packages.
+# It is free, and complements CodeQL code scanning (which looks at the code itself):
+# it fails when any direct or transitive NuGet package has a known vulnerability.
+name: Dependency audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  nuget:
+    # Windows runner, because the WPF project (net10.0-windows) needs the Windows Desktop targeting pack to restore.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Check NuGet packages for known vulnerabilities
+        shell: bash
+        run: |
+          status=0
+          for proj in $(git ls-files '*.csproj'); do
+            dotnet restore "$proj" --verbosity quiet
+            out=$(dotnet list "$proj" package --vulnerable --include-transitive)
+            echo "$out"
+            if echo "$out" | grep -q "has the following vulnerable packages"; then status=1; fi
+          done
+          exit $status

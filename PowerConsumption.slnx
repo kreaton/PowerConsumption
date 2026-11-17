@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="PowerConsumption.Data/PowerConsumption.Data.csproj" />
+  <Project Path="PowerConsumption.Tests/PowerConsumption.Tests.csproj" />
+  <Project Path="PowerConsumption.Wpf/PowerConsumption.Wpf.csproj" />
+</Solution>

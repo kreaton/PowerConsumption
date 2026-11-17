@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>PowerConsumption</AssemblyName>
+    <RootNamespace>PowerConsumption.Wpf</RootNamespace>
+    <Product>PowerConsumption</Product>
+    <!-- The version is set in Directory.Build.props. -->
+    <!-- WPF's built-in Fluent theme (ThemeMode) is still flagged experimental in .NET 10. -->
+    <NoWarn>$(NoWarn);WPF0001</NoWarn>
+    <!-- The exe icon in Explorer and the taskbar; drawn by tools/Make-Icon.ps1. -->
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <!-- Program.Main runs Velopack's install/update hooks before WPF starts. -->
+    <StartupObject>PowerConsumption.Wpf.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Installer and updates. Keep in step with vpk in .github/workflows/release.yml. -->
+    <PackageReference Include="Velopack" Version="1.2.161" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PowerConsumption.Data\PowerConsumption.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Also embedded for the windows' title bars and the About box. -->
+    <Resource Include="app.ico" />
+  </ItemGroup>
+
+</Project>
