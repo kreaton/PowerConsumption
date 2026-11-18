@@ -1,6 +1,9 @@
 # PowerConsumption
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/kreaton/PowerConsumption?style=flat&logo=github&color=yellow)](https://github.com/kreaton/PowerConsumption/stargazers)
+
+⭐ If PowerConsumption earns a place on your machine, [star it on GitHub](https://github.com/kreaton/PowerConsumption) — it's free, made by one developer, and stars are how other people find it.
 
 What the house used, what it cost, how much went to the EV, and what the weather was – by
 **hour, day, month or year**. The successor to
