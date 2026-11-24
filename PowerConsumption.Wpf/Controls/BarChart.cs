@@ -114,8 +114,8 @@ public sealed class BarChart : Control
     // ---------------- drawing ----------------
 
     /// <summary>
-    /// Draws, in order: legend, y gridlines and labels, separators, hover highlight, the stacked
-    /// bars, the ▲ peak marker, the x-axis and finally the optional line on top.
+    /// Draws, in order: legend, y labels, separators, hover highlight, the stacked bars, the y
+    /// gridlines (over the bars), the ▲ peak marker, the x-axis and finally the optional line on top.
     /// </summary>
     protected override void OnRender(DrawingContext dc)
     {
@@ -125,9 +125,14 @@ public sealed class BarChart : Control
 
         var ink = Foreground ?? Brushes.Black;
         var muted = WithOpacity(ink, 0.6);
-        var gridPen = new Pen(WithOpacity(ink, 0.12), 1);
+        // Horizontal gridlines are drawn over the bars, so they are bold enough to read across them.
+        var gridPen = new Pen(WithOpacity(ink, 0.45), 2);
+        var zeroPen = new Pen(WithOpacity(ink, 0.75), 2);
+        var separatorPen = new Pen(WithOpacity(ink, 0.12), 1);
         var axisPen = new Pen(WithOpacity(ink, 0.35), 1);
         gridPen.Freeze();
+        zeroPen.Freeze();
+        separatorPen.Freeze();
         axisPen.Freeze();
 
         DrawLegend(dc, ink, muted);
@@ -152,10 +157,8 @@ public sealed class BarChart : Control
         var tickFormat = TickFormat(step);
         for (var v = yMin; v <= yMax + step / 1000; v += step)
         {
-            var y = Snap(Y(v));
-            dc.DrawLine(Math.Abs(v) < 1e-9 ? axisPen : gridPen, new Point(_plot.Left, y), new Point(_plot.Right, y));
             var label = Text(v.ToString(tickFormat, CultureInfo.CurrentCulture), muted);
-            dc.DrawText(label, new Point(_plot.Left - 6 - label.Width, y - label.Height / 2));
+            dc.DrawText(label, new Point(_plot.Left - 6 - label.Width, Y(v) - label.Height / 2));
         }
 
         // Each bar owns an equal slot of the width. The gap between bars is a quarter of the slot
@@ -168,7 +171,7 @@ public sealed class BarChart : Control
             if (_bars[i].SeparatorBefore)
             {
                 var x = Snap(_plot.Left + i * slot);
-                dc.DrawLine(gridPen, new Point(x, _plot.Top), new Point(x, _plot.Bottom));
+                dc.DrawLine(separatorPen, new Point(x, _plot.Top), new Point(x, _plot.Bottom));
             }
         }
 
@@ -203,6 +206,13 @@ public sealed class BarChart : Control
                     down += value;
                 }
             }
+        }
+
+        // Horizontal gridlines on top of the bars; 2 px wide, so they sit on whole pixels.
+        for (var v = yMin; v <= yMax + step / 1000; v += step)
+        {
+            var y = Math.Round(Y(v));
+            dc.DrawLine(Math.Abs(v) < 1e-9 ? zeroPen : gridPen, new Point(_plot.Left, y), new Point(_plot.Right, y));
         }
 
         // ▲ on the highest bar.
